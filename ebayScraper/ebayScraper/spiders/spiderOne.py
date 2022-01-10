@@ -5,8 +5,10 @@ class SpideroneSpider(scrapy.Spider):
     name = 'spiderOne'  # spider name
     # list of allowed domains as if it encounters any domain other then this then it will ignore
     allowed_domains = [
-        'https://www.ebay.com/sch/i.html?_nkw=TVs&_sacat=11071&_trkparms=pageci%3A8317b07f-6a6d-11ec-89a1-c661edad1081%7Cparentrq%3A11e7d26717e0a77d31d299d7fff6f78c%7Ciid%3A1']
-    start_urls = ['https://www.ebay.com/sch/i.html?_nkw=TVs&_sacat=11071&_trkparms=pageci%3A8317b07f-6a6d-11ec-89a1-c661edad1081%7Cparentrq%3A11e7d26717e0a77d31d299d7fff6f78c%7Ciid%3A1']  # starting point
+        'https://www.ebay.com/b/Lamps-Lighting-Ceiling-Fans/20697/bn_818527']
+    # starting point
+    start_urls = [
+        'https://www.ebay.com/b/Lamps-Lighting-Ceiling-Fans/20697/bn_818527']
 
     # Parse is default name and it cannot be changed
     def parse(self, response):
@@ -27,4 +29,8 @@ class SpideroneSpider(scrapy.Spider):
             # print(ratings)
             # print(discount)
             # print('\n')
-            yield{'text': text, 'price': price, 'ratings': ratings, 'discount': discount}
+            next_page_url = response.xpath(
+                "//*[@class='pagination__items']/li/a/@href").extract_first()
+            absolute_nextPageUrl = response.urljoin(next_page_url)
+            # yield{'text': text, 'price': price, 'ratings': ratings, 'discount': discount}
+            yield scrapy.Request(absolute_nextPageUrl)
