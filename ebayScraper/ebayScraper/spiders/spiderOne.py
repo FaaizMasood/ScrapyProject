@@ -23,12 +23,7 @@ class SpideroneSpider(scrapy.Spider):
                 './/*[@class="s-item__reviews"]//*[@class="clipped"]/text()').extract_first()
             discount = tv.xpath(
                 './/*[@class="s-item__details clearfix"]//*[@class="s-item__detail s-item__detail--primary"]//*[@class="BOLD"]/text()').extract_first()
-            # print('\n')
-            # print(text)
-            # print(price)
-            # print(ratings)
-            # print(discount)
-            # print('\n')
+
             next_page_url = response.xpath(
                 "//*[@class='pagination__items']/li/a/@href").extract_first()
             absolute_nextPageUrl = response.urljoin(next_page_url)
