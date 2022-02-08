@@ -5,13 +5,9 @@
 
 
 # useful for handling different item types with a single interface
-##from itemadapter import ItemAdapter
+from itemadapter import ItemAdapter
 
 
 class EbayscraperPipeline:
     def process_item(self, item, spider):
-        # if item['author']:
-        #     item['author'] = item['author'][0].upper()
-
-        # return item
-        pass
+        return item
